@@ -30,7 +30,7 @@ function loadData() {
             $nytElem.append(articule(element));
 
         });
-         wiki_API();
+         wiki_API(city);
     });
 
     
@@ -43,14 +43,32 @@ function loadData() {
     return false;
 };
 
-function wiki_API () {
-    $.getJSON('https://en.wikipedia.org/w/api.php', {action:'opensearch',search:'Medellin',format: 'json',callback:'spellcheck'}, function(json, textStatus) {
-            alert(json);
-     }); 
+function wiki_API (search) {
+    $.ajax({
+    	url: 'https://en.wikipedia.org/w/api.php?action=opensearch&search='+search+'&format=json&callback=spellcheck',
+    	type: 'GET',
+    	dataType: 'jsonp',
+    	data: {},
+    })
+    .done(function(data) {
+    	
+    	data[1].forEach( function(element, index) {
+    		var aux = articuleWiki(data[1][index],data[2][index],data[3][index]);
+    		$('#wikipedia-links').append(aux);
+    	});
+
+    })
+    .fail(function() {
+    	console.log("error");
+    })
+    .always(function() {
+    	console.log("complete");
+    });
+    
 }
 
 function articule (element) {
-    var url ="";
+    var url ="http://vignette3.wikia.nocookie.net/shokugekinosoma/images/6/60/No_Image_Available.png/revision/latest/scale-to-width-down/480?cb=20150708082716";
     if (element.multimedia.length > 0) {
         url = "http://www.nytimes.com/"+element.multimedia[0].url;
     }
@@ -65,6 +83,19 @@ function articule (element) {
     '</div>'+
   '</div>' ;
     return str;
+}
+
+function articuleWiki (title,cuerpo,link) {
+	var str =  '<div class="col-sm-12 col-md-12">'+
+    '<div class="thumbnail">'+
+      '<div class="caption">'+
+        '<h3>'+title+'</h3>'+
+        '<p>'+cuerpo+'</p>'+
+        '<p><a href="'+link+'" class="btn btn-primary" role="button">Ir A Wiki</a></p>'+
+      '</div>'+
+    '</div>'+
+  '</div>';
+	return str;
 }
 
 //$('#form-container').submit(loadData);
