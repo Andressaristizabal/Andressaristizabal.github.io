@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<title></title>
+		<meta charset="UTF-8">
+	</head>
+	<body>
+		<h3 id="prueba"></h3>
+		<h1 id="a"></h1>
+		<div id="div" style="width: 50%;
+height: 50%;"></div>
+		<script type="text/javascript">
+			/*window.alert("Hi bic.."); //Mostrar Datos
+			prompt("What's your name ?"); // tomar datos
+			document.write("<h1>Hi bicth</h1>");// escribir en document
+			document.getElementById('prueba').innerHTML="Hi i from js";
+			console.log("Hola");
+			var num  = prompt("Copia algo");
+			document.write(num);
+
+			var radio = parseFloat(prompt("Ingrese radiu del circulo"));
+			var area  = Math.PI*(radio*radio); 
+			
+			document.getElementById('a').innerHTML="El area es : " + area.toFixed(2	);*/
+
+			var temC = parseFloat(prompt("Ingrese C"));
+			var temF = (((temC*9)/5)+32).toFixed(0);
+			var pad = 'FFFF'
+			
+			var color = (pad+temF).slice(-6)
+			document.getElementById('div').style.backgroundColor = color+"" ;
+			document.getElementById('a').innerHTML="en F° es : " + temF;
+			
+		</script>
+	</body>
+</html>
